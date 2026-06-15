@@ -14,6 +14,34 @@
         user-select: none;
     }
     h1 { color: #ffd700; margin: 10px 0; text-shadow: 0 0 15px #ffd700; }
+    h2 { color: #a8d5a8; }
+    .license {
+        max-width: 700px;
+        margin: 15px auto;
+        padding: 12px;
+        background: rgba(255,215,0,0.1);
+        border: 2px solid #ffd700;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+    .intro {
+        max-width: 700px;
+        margin: 25px auto;
+        font-size: 1.15em;
+        line-height: 1.6;
+        color: #c8e6c8;
+    }
+    button {
+        padding: 14px 32px;
+        margin: 8px;
+        font-size: 18px;
+        background: #228B22;
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+    button:hover { transform: scale(1.05); }
     .pile {
         width: 260px; height: 360px;
         margin: 30px auto;
@@ -41,9 +69,9 @@
     .card.reversed { transform: rotate(180deg); }
     .label {
         padding: 12px;
-        background: rgba(0,0,0,0.9);
+        background: rgba(0,0,0,0.85);
         color: #ffd700;
-        font-size: 15px;
+        font-size: 16px;
     }
 </style>
 </head>
@@ -51,6 +79,37 @@
 
 <h1>🌿 Ethereal Gaia Oracle</h1>
 <h2>Free Version • by Janine Steffens • 2026</h2>
+
+<div class="license">
+    <strong>PERSONAL USE ONLY</strong><br>
+    Do not copy or re-upload this tool.<br>
+    © Janine Steffens 2026
+</div>
+
+<div class="intro">
+    Sit quietly.<br>
+    Take a deep breath.<br>
+    Think about your question.<br>
+    When ready, click the pile to draw cards.
+</div>
+
+<button onclick="newReading(3)">🌱 3-Card Spread</button>
+<button onclick="newReading(8)">🌳 8-Card Spread</button>
+
+<p style="margin:40px 0 20px 0; font-size:20px; color:#ffd700;">
+    Enjoying the free tool?<br>
+    <strong>Want the Full Version + Physical Deck?</strong>
+</p>
+
+<button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-KrASDlW7pNbRibqOUyBsSl-q3zoMhxrZiKgnDI0nlsmi-w/viewform?usp=header', '_blank')" 
+        style="background:#d4af37; color:#000; padding:18px 45px; font-size:21px;">
+        🔔 Join Waiting List
+</button>
+
+<button onclick="window.open('https://buymeacoffee.com/ripplesofwaves', '_blank')" 
+        style="background:#ffd700; color:#000;">
+        ☕ Support My Work
+</button>
 
 <div class="pile" id="pile" onclick="drawCard()"></div>
 <div class="drawn" id="drawnCards"></div>
@@ -61,6 +120,11 @@ const fullDeck = Array.from({length:44}, (_,i) => ({
     file: `${i+1}.jpg`,
     name: `Card ${i+1}`
 }));
+
+function newReading(num) {
+    document.getElementById('drawnCards').innerHTML = '';
+    for (let i = 0; i < num; i++) drawCard();
+}
 
 function drawCard() {
     if (currentDeck.length === 0) {
@@ -75,15 +139,8 @@ function drawCard() {
     div.onclick = () => div.classList.toggle('reversed');
     document.getElementById('drawnCards').prepend(div);
 }
-
-function newReading(num) {
-    document.getElementById('drawnCards').innerHTML = '';
-    for (let i = 0; i < num; i++) drawCard();
-}
 </script>
-
-<button onclick="newReading(3)">🌱 3-Card Spread</button>
-<button onclick="newReading(8)">🌳 8-Card Spread</button>
 
 </body>
 </html>
+
