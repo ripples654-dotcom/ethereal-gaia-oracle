@@ -13,7 +13,6 @@
         font-family: 'Georgia', serif;
         text-align: center;
         user-select: none;
-        -webkit-user-select: none;
     }
     h1 { color: #ffd700; margin: 15px 0 5px; text-shadow: 0 0 15px #ffd700; font-size: 2.1em; }
     h2 { color: #a8d5a8; margin-bottom: 10px; }
@@ -24,7 +23,6 @@
         font-size: 1.15em;
         line-height: 1.6;
         color: #c8e6c8;
-        font-style: italic;
     }
 
     .pile {
@@ -39,11 +37,20 @@
 
     .drawn {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
         gap: 22px;
         max-width: 1100px;
         margin: 30px auto;
         padding: 10px;
+    }
+
+    /* 3-Card Spread - Bigger cards */
+    .drawn.three-cards {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    /* 8-Card Spread - 2x4 */
+    .drawn.eight-cards {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .card {
@@ -54,7 +61,7 @@
         cursor: pointer;
         position: relative;
         box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-        min-height: 340px;
+        min-height: 360px;
     }
 
     .card.reversed img { transform: rotate(180deg); }
@@ -95,8 +102,6 @@
     }
     .card.show-desc .description { display: block; }
 
-    .drawn.eight-cards { grid-template-columns: repeat(2, 1fr); }
-
     button {
         padding: 16px 30px;
         margin: 10px 6px;
@@ -128,20 +133,28 @@
 
 <div class="drawn" id="drawnCards"></div>
 
-<script>
-// Strong Anti-Copy Protection
-document.addEventListener('contextmenu', e => { e.preventDefault(); alert("This tool is protected."); });
-document.addEventListener('keydown', e => {
-    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") || 
-        (e.ctrlKey && e.key === "u") || (e.ctrlKey && e.key === "s")) {
-        e.preventDefault();
-        alert("This tool is protected.");
-    }
-});
+<p style="margin:40px 0 20px 0; font-size:19px; color:#ffd700;">
+    Enjoying the free tool?<br>
+    <strong>Want the Full Version + Physical Deck?</strong>
+</p>
 
-const cardDescriptions = { /* Your full 44 descriptions - same as before */ 
+<button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-KrASDlW7pNbRibqOUyBsSl-q3zoMhxrZiKgnDI0nlsmi-w/viewform?usp=header', '_blank')" 
+        style="background:#d4af37; color:#000; padding:16px 40px; font-size:18px;">
+        🔔 Join Waiting List
+</button>
+
+<button onclick="window.open('https://buymeacoffee.com/ripplesofwaves', '_blank')" 
+        style="background:#ffd700; color:#000; padding:16px 30px;">
+        ☕ Support My Work
+</button>
+
+<script>
+// Anti-copy protection
+document.addEventListener('contextmenu', e => { e.preventDefault(); alert("This tool is protected."); });
+
+const cardDescriptions = { /* your full 44 descriptions here */ 
     1:  { up: "Divine timing and patience. Trust life’s natural rhythm.", rev: "Impatience or resistance to timing." },
-    // ... (keep all 44 here - use the list from previous messages)
+    // ... paste all 44 from previous messages
     44: { up: "Deep silence, presence, and sanctuary.", rev: "Restlessness and mental noise." }
 };
 
@@ -149,10 +162,13 @@ let currentDeck = [];
 const fullDeck = Array.from({length:44}, (_,i) => ({ file: `${i+1}.jpg`, number: i+1 }));
 
 function newReading(num) {
-    document.getElementById('drawnCards').innerHTML = '';
     const container = document.getElementById('drawnCards');
-    if (num === 8) container.classList.add('eight-cards');
-    else container.classList.remove('eight-cards');
+    container.innerHTML = '';
+    
+    if (num === 3) container.classList.add('three-cards');
+    else if (num === 8) container.classList.add('eight-cards');
+    else container.classList.remove('three-cards', 'eight-cards');
+
     for (let i = 0; i < num; i++) drawCard();
 }
 
