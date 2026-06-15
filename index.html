@@ -12,14 +12,15 @@
         font-family: 'Georgia', serif;
         text-align: center;
         user-select: none;
+        -webkit-user-select: none;
     }
     h1 { color: #ffd700; margin: 10px 0; text-shadow: 0 0 15px #ffd700; }
     h2 { color: #a8d5a8; }
     .license {
         max-width: 700px;
         margin: 15px auto;
-        padding: 12px;
-        background: rgba(255,215,0,0.1);
+        padding: 15px;
+        background: rgba(255,215,0,0.12);
         border: 2px solid #ffd700;
         border-radius: 12px;
         font-size: 14px;
@@ -40,8 +41,9 @@
         border: none;
         border-radius: 50px;
         cursor: pointer;
+        transition: all 0.3s;
     }
-    button:hover { transform: scale(1.05); }
+    button:hover { transform: scale(1.05); box-shadow: 0 0 20px #ffd700; }
     .pile {
         width: 260px; height: 360px;
         margin: 30px auto;
@@ -64,14 +66,24 @@
         overflow: hidden;
         background: #000;
         cursor: pointer;
+        position: relative;
     }
     .card img { width:100%; height:auto; display:block; }
     .card.reversed { transform: rotate(180deg); }
     .label {
         padding: 12px;
-        background: rgba(0,0,0,0.85);
+        background: rgba(0,0,0,0.9);
         color: #ffd700;
         font-size: 16px;
+    }
+    .watermark {
+        position: absolute;
+        bottom: 8px;
+        right: 12px;
+        color: rgba(255,215,0,0.3);
+        font-size: 11px;
+        pointer-events: none;
+        transform: rotate(-8deg);
     }
 </style>
 </head>
@@ -82,15 +94,15 @@
 
 <div class="license">
     <strong>PERSONAL USE ONLY</strong><br>
-    Do not copy or re-upload this tool.<br>
-    © Janine Steffens 2026
+    Copying, re-uploading, or modifying this tool is strictly prohibited.<br>
+    © Janine Steffens 2026 • All Rights Reserved
 </div>
 
 <div class="intro">
     Sit quietly.<br>
     Take a deep breath.<br>
-    Think about your question.<br>
-    When ready, click the pile to draw cards.
+    Think about your question or situation.<br>
+    When you feel ready, click the pile to draw cards.
 </div>
 
 <button onclick="newReading(3)">🌱 3-Card Spread</button>
@@ -98,7 +110,7 @@
 
 <p style="margin:40px 0 20px 0; font-size:20px; color:#ffd700;">
     Enjoying the free tool?<br>
-    <strong>Want the Full Version + Physical Deck?</strong>
+    <strong>Want to be notified when the Full Version & Physical Deck are ready?</strong>
 </p>
 
 <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-KrASDlW7pNbRibqOUyBsSl-q3zoMhxrZiKgnDI0nlsmi-w/viewform?usp=header', '_blank')" 
@@ -115,11 +127,23 @@
 <div class="drawn" id="drawnCards"></div>
 
 <script>
+// Anti-copy protection
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") || 
+        (e.ctrlKey && e.key === "u") || (e.ctrlKey && e.key === "s")) {
+        e.preventDefault();
+        alert("This tool is protected.");
+    }
+});
+
 let currentDeck = [];
 const fullDeck = Array.from({length:44}, (_,i) => ({
     file: `${i+1}.jpg`,
     name: `Card ${i+1}`
 }));
+
+const fingerprint = btoa(navigator.userAgent).slice(0, 12);
 
 function newReading(num) {
     document.getElementById('drawnCards').innerHTML = '';
@@ -135,7 +159,13 @@ function drawCard() {
 
     const div = document.createElement('div');
     div.className = `card ${isReversed ? 'reversed' : ''}`;
-    div.innerHTML = `<img src="${card.file}" alt="${card.name}"><div class="label">${card.name}</div>`;
+    
+    div.innerHTML = `
+        <img src="${card.file}" alt="${card.name}">
+        <div class="label">${card.name}</div>
+        <div class="watermark">© Janine Steffens 2026 • ${fingerprint}</div>
+    `;
+    
     div.onclick = () => div.classList.toggle('reversed');
     document.getElementById('drawnCards').prepend(div);
 }
@@ -143,4 +173,3 @@ function drawCard() {
 
 </body>
 </html>
-
