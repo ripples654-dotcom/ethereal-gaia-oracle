@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ethereal Gaia Oracle - Free</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+    body { 
+        margin: 0; padding: 20px;
+        background: linear-gradient(135deg, #0a1f0a, #001a11);
+        color: #fff;
+        font-family: 'Georgia', serif;
+        text-align: center;
+        user-select: none;
+    }
+    h1 { color: #ffd700; margin: 10px 0; text-shadow: 0 0 15px #ffd700; }
+    .pile {
+        width: 260px; height: 360px;
+        margin: 30px auto;
+        background: #111 url('Card-Back.jpg') center/cover;
+        border: 12px solid #d4af37;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+        cursor: pointer;
+    }
+    .drawn {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 25px;
+        max-width: 1400px;
+        margin: 40px auto;
+    }
+    .card {
+        border: 8px solid #d4af37;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #000;
+        cursor: pointer;
+    }
+    .card img { width:100%; height:auto; display:block; }
+    .card.reversed { transform: rotate(180deg); }
+    .label {
+        padding: 12px;
+        background: rgba(0,0,0,0.9);
+        color: #ffd700;
+        font-size: 15px;
+    }
+</style>
+</head>
+<body>
+
+<h1>🌿 Ethereal Gaia Oracle</h1>
+<h2>Free Version • by Janine Steffens • 2026</h2>
+
+<div class="pile" id="pile" onclick="drawCard()"></div>
+<div class="drawn" id="drawnCards"></div>
+
+<script>
+let currentDeck = [];
+const fullDeck = Array.from({length:44}, (_,i) => ({
+    file: `${i+1}.jpg`,
+    name: `Card ${i+1}`
+}));
+
+function drawCard() {
+    if (currentDeck.length === 0) {
+        currentDeck = [...fullDeck].sort(() => Math.random() - 0.5);
+    }
+    const card = currentDeck.pop();
+    const isReversed = Math.random() < 0.40;
+
+    const div = document.createElement('div');
+    div.className = `card ${isReversed ? 'reversed' : ''}`;
+    div.innerHTML = `<img src="${card.file}" alt="${card.name}"><div class="label">${card.name}</div>`;
+    div.onclick = () => div.classList.toggle('reversed');
+    document.getElementById('drawnCards').prepend(div);
+}
+
+function newReading(num) {
+    document.getElementById('drawnCards').innerHTML = '';
+    for (let i = 0; i < num; i++) drawCard();
+}
+</script>
+
+<button onclick="newReading(3)">🌱 3-Card Spread</button>
+<button onclick="newReading(8)">🌳 8-Card Spread</button>
+
+</body>
+</html>
