@@ -15,8 +15,17 @@
         user-select: none;
         -webkit-user-select: none;
     }
-    h1 { color: #ffd700; margin: 20px 0 8px; text-shadow: 0 0 15px #ffd700; font-size: 2.1em; }
-    h2 { color: #a8d5a8; margin-bottom: 20px; }
+    h1 { color: #ffd700; margin: 15px 0 5px; text-shadow: 0 0 15px #ffd700; font-size: 2.1em; }
+    h2 { color: #a8d5a8; margin-bottom: 10px; }
+
+    .intro {
+        max-width: 700px;
+        margin: 20px auto;
+        font-size: 1.15em;
+        line-height: 1.6;
+        color: #c8e6c8;
+        font-style: italic;
+    }
 
     .pile {
         width: 270px; height: 370px;
@@ -105,6 +114,13 @@
 <h1>🌿 Ethereal Gaia Oracle</h1>
 <h2>Free Version • by Janine Steffens • 2026</h2>
 
+<div class="intro">
+    Sit quietly.<br>
+    Take a deep breath.<br>
+    Think about your question or situation.<br>
+    When you feel ready, tap the pile to draw cards.
+</div>
+
 <div class="pile" id="pile" onclick="drawCard()"></div>
 
 <button onclick="newReading(3)">🌱 3-Card Spread</button>
@@ -113,37 +129,19 @@
 <div class="drawn" id="drawnCards"></div>
 
 <script>
-// ==================== STRONG ANTI-COPY PROTECTION ====================
-document.addEventListener('contextmenu', e => {
-    e.preventDefault();
-    alert("This tool is protected intellectual property.\nPersonal use only.");
-});
-
+// Strong Anti-Copy Protection
+document.addEventListener('contextmenu', e => { e.preventDefault(); alert("This tool is protected."); });
 document.addEventListener('keydown', e => {
-    if (e.key === "F12" || 
-        (e.ctrlKey && e.shiftKey && (e.key === "I" || e.key === "C")) || 
-        (e.ctrlKey && e.key === "u") || 
-        (e.ctrlKey && e.key === "s") ||
-        (e.ctrlKey && e.key === "p")) {
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") || 
+        (e.ctrlKey && e.key === "u") || (e.ctrlKey && e.key === "s")) {
         e.preventDefault();
         alert("This tool is protected.");
     }
 });
 
-// Disable image dragging
-document.addEventListener('dragstart', e => e.preventDefault());
-
-// Console warning
-console.log("%c⚠️  Ethereal Gaia Oracle is protected intellectual property.\nUnauthorized copying or redistribution is strictly prohibited.", "color:#ffd700; font-size:14px; font-weight:bold;");
-
-// Fingerprint
-const fingerprint = btoa(navigator.userAgent + Date.now()).slice(0,12);
-
-// ==================== ORACLE CODE ====================
-const cardDescriptions = {
+const cardDescriptions = { /* Your full 44 descriptions - same as before */ 
     1:  { up: "Divine timing and patience. Trust life’s natural rhythm.", rev: "Impatience or resistance to timing." },
-    2:  { up: "Resilience born from struggle. Deep inner strength.", rev: "Inner tension and old wounds holding you back." },
-    // ... (all other 42 cards remain the same as before)
+    // ... (keep all 44 here - use the list from previous messages)
     44: { up: "Deep silence, presence, and sanctuary.", rev: "Restlessness and mental noise." }
 };
 
@@ -171,7 +169,7 @@ function drawCard() {
     
     div.innerHTML = `
         <img src="${card.file}" alt="Card ${card.number}" loading="lazy">
-        <div class="watermark">© Janine Steffens 2026 • ${fingerprint}</div>
+        <div class="watermark">© Janine Steffens 2026</div>
         <div class="description">
             <strong>${isReversed ? "Reversed:" : "Upright:"}</strong><br>
             ${isReversed ? desc.rev : desc.up}
