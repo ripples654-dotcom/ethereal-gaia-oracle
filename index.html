@@ -13,12 +13,12 @@
         text-align: center;
         user-select: none;
     }
-    h1 { color: #ffd700; margin: 20px 0 8px; text-shadow: 0 0 15px #ffd700; font-size: 2.1em; }
-    h2 { color: #a8d5a8; margin-bottom: 20px; }
+    h1 { color: #ffd700; margin: 15px 0 5px; text-shadow: 0 0 15px #ffd700; font-size: 2.1em; }
+    h2 { color: #a8d5a8; margin-bottom: 20px; font-size: 1.1em; }
 
     .pile {
-        width: 260px; height: 360px;
-        margin: 25px auto;
+        width: 270px; height: 370px;
+        margin: 20px auto;
         background: #111 url('Card-Back.jpg') center/cover;
         border: 14px solid #d4af37;
         border-radius: 22px;
@@ -46,21 +46,29 @@
         min-height: 340px;
     }
 
-    .card.reversed { transform: rotate(180deg); }
+    /* Only flip the image, not the whole card */
+    .card.reversed img {
+        transform: rotate(180deg);
+    }
 
     .card.reversed::after {
         content: "REVERSED";
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) rotate(180deg);
+        transform: translate(-50%, -50%);
         color: rgba(255, 80, 80, 0.95);
         font-size: 19px;
         font-weight: bold;
         z-index: 6;
     }
 
-    .card img { width:100%; height:auto; display:block; }
+    .card img { 
+        width:100%; 
+        height:auto; 
+        display:block;
+        transition: transform 0.4s;
+    }
 
     .watermark {
         position: absolute;
@@ -175,7 +183,7 @@ function drawCard() {
     }
     const card = currentDeck.pop();
     const isReversed = Math.random() < 0.40;
-    const desc = cardDescriptions[card.number];
+    const desc = cardDescriptions[card.number] || {up: "A gentle message from Gaia.", rev: ""};
 
     const div = document.createElement('div');
     div.className = `card ${isReversed ? 'reversed' : ''}`;
