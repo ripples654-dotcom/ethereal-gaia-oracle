@@ -4,48 +4,58 @@
 <meta charset="UTF-8">
 <title>Ethereal Gaia Oracle - Free</title>
 <meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <style>
+    * { box-sizing: border-box; }
     body { 
-        margin: 0; padding: 20px;
+        margin: 0; padding: 15px;
         background: linear-gradient(135deg, #0a1f0a, #001a11);
         color: #fff;
         font-family: 'Georgia', serif;
         text-align: center;
         user-select: none;
         -webkit-user-select: none;
+        min-height: 100vh;
     }
-    h1 { color: #ffd700; margin: 10px 0; text-shadow: 0 0 15px #ffd700; }
-    h2 { color: #a8d5a8; }
-    .license {
+    h1 { 
+        color: #ffd700; 
+        margin: 15px 0 5px; 
+        text-shadow: 0 0 15px #ffd700;
+        font-size: 2.2em;
+    }
+    h2 { color: #a8d5a8; font-size: 1.1em; margin-bottom: 20px; }
+
+    .license, .intro {
         max-width: 700px;
         margin: 15px auto;
-        padding: 15px;
+        padding: 12px 15px;
         background: rgba(255,215,0,0.12);
         border: 2px solid #ffd700;
         border-radius: 12px;
-        font-size: 14px;
+        font-size: 15px;
+        line-height: 1.5;
     }
-    .intro {
-        max-width: 700px;
-        margin: 25px auto;
-        font-size: 1.15em;
-        line-height: 1.6;
-        color: #c8e6c8;
-    }
+    .intro { background: rgba(200,230,200,0.1); border-color: #a8d5a8; }
+
     button {
-        padding: 14px 32px;
-        margin: 8px;
-        font-size: 18px;
+        padding: 14px 28px;
+        margin: 8px 4px;
+        font-size: 17px;
         background: #228B22;
         color: #fff;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         transition: all 0.3s;
+        width: 100%;
+        max-width: 280px;
     }
-    button:hover { transform: scale(1.05); box-shadow: 0 0 20px #ffd700; }
+    button:hover, button:active { transform: scale(1.05); }
+
     .pile {
-        width: 260px; height: 360px;
+        width: 240px;
+        height: 340px;
         margin: 30px auto;
         background: #111 url('Card-Back.jpg') center/cover;
         border: 12px solid #d4af37;
@@ -53,13 +63,16 @@
         box-shadow: 0 15px 40px rgba(0,0,0,0.9);
         cursor: pointer;
     }
+
     .drawn {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-        gap: 25px;
-        max-width: 1400px;
-        margin: 40px auto;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 18px;
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 10px;
     }
+
     .card {
         border: 8px solid #d4af37;
         border-radius: 16px;
@@ -67,26 +80,43 @@
         background: #000;
         cursor: pointer;
         position: relative;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.6);
     }
     .card img { width:100%; height:auto; display:block; }
     .card.reversed { transform: rotate(180deg); }
+
     .label {
-        padding: 12px;
+        padding: 10px;
         background: rgba(0,0,0,0.9);
         color: #ffd700;
-        font-size: 16px;
+        font-size: 15px;
+        min-height: 48px;
     }
+
     .watermark {
         position: absolute;
-        bottom: 15px;
-        right: 15px;
-        color: rgba(255, 215, 0, 0.55);
-        font-size: 14px;
+        bottom: 12px;
+        right: 12px;
+        color: rgba(255, 215, 0, 0.6);
+        font-size: 13px;
         font-weight: bold;
         transform: rotate(-12deg);
         text-shadow: 2px 2px 4px #000;
         pointer-events: none;
         z-index: 10;
+    }
+
+    /* Mobile & Tablet Adjustments */
+    @media (max-width: 768px) {
+        h1 { font-size: 1.9em; }
+        .pile { width: 210px; height: 300px; }
+        .drawn { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 15px; }
+        button { padding: 16px 20px; font-size: 16px; }
+    }
+
+    @media (max-width: 480px) {
+        .pile { width: 190px; height: 270px; }
+        .drawn { grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); }
     }
 </style>
 </head>
@@ -97,27 +127,26 @@
 
 <div class="license">
     <strong>PERSONAL USE ONLY</strong><br>
-    Copying, re-uploading, or modifying this tool is strictly prohibited.<br>
-    © Janine Steffens 2026 • All Rights Reserved
+    Copying or re-uploading this tool is strictly prohibited.<br>
+    © Janine Steffens 2026
 </div>
 
 <div class="intro">
     Sit quietly.<br>
     Take a deep breath.<br>
-    Think about your question or situation.<br>
-    When you feel ready, click the pile to draw cards.
+    Think about your question.<br>
+    When ready, tap the pile to draw cards.
 </div>
 
 <button onclick="newReading(3)">🌱 3-Card Spread</button>
 <button onclick="newReading(8)">🌳 8-Card Spread</button>
 
-<p style="margin:40px 0 20px 0; font-size:20px; color:#ffd700;">
-    Enjoying the free tool?<br>
-    <strong>Want the Full Version + Physical Deck?</strong>
+<p style="margin:35px 0 20px 0; font-size:19px; color:#ffd700;">
+    Enjoying it? Join the waiting list for Full Version + Physical Deck
 </p>
 
 <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSd-KrASDlW7pNbRibqOUyBsSl-q3zoMhxrZiKgnDI0nlsmi-w/viewform?usp=header', '_blank')" 
-        style="background:#d4af37; color:#000; padding:18px 45px; font-size:21px;">
+        style="background:#d4af37; color:#000; font-size:18px;">
         🔔 Join Waiting List
 </button>
 
@@ -130,15 +159,8 @@
 <div class="drawn" id="drawnCards"></div>
 
 <script>
-// Anti-copy protection
+// Anti-copy
 document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") || 
-        (e.ctrlKey && e.key === "u") || (e.ctrlKey && e.key === "s")) {
-        e.preventDefault();
-        alert("This tool is protected.");
-    }
-});
 
 let currentDeck = [];
 const fullDeck = Array.from({length:44}, (_,i) => ({
@@ -173,4 +195,4 @@ function drawCard() {
 </script>
 
 </body>
-</html>
+</html>   
